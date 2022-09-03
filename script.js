@@ -15,6 +15,14 @@ function Book(title, author, pages, read) {
     this.read = read
 }
 
+Book.prototype.toggleRead = function() {
+    if(this.read == 'Read') {
+        this.read = 'Not Read';
+    } else {
+        this.read = 'Read';
+    }
+}
+
 function newBook() {
     let title = document.getElementById('title').value;
     let author = document.getElementById('author').value;
@@ -28,6 +36,14 @@ function newBook() {
 
     let book = new Book(title, author, pages, read)
     myLibrary.push(book);
+}
+
+function removeBook(e) {
+    const bookIndex = e.target.parentNode.dataset.bookNumber;
+    console.log(bookIndex);
+    // console.log(e.target.parentNode.dataset.bookNumber);
+    myLibrary.splice(bookIndex, 1)
+    e.target.parentNode.remove();
 }
 
 function addCard() {
@@ -49,12 +65,21 @@ function addCard() {
         bookRead.classList.add('bookRead');
         bookRemove.classList.add('bookRemove');
 
-        bookCard.dataset.volume = myLibrary.indexOf(item);
+        bookCard.dataset.bookNumber = myLibrary.indexOf(item);
         bookTitle.textContent = `Title:  ${item.title}`;
         bookAuthor.textContent = `Author:  ${item.author}`;
         bookPages.textContent = `Pages:  ${item.pages}`;
         bookRead.textContent = `${item.read}`;
         bookRemove.textContent = `Remove`;
+
+        bookRead.addEventListener('click', function() {
+            item.toggleRead();
+            bookRead.textContent = `${item.read}`;
+        });
+
+        bookRemove.addEventListener('click', function(e) {
+            removeBook(e);
+        })
     
         content.appendChild(bookCard);
         bookCard.appendChild(infoList);
@@ -62,7 +87,9 @@ function addCard() {
         infoList.appendChild(bookAuthor);
         infoList.appendChild(bookPages);
         bookCard.appendChild(bookRead);
-        bookCard.appendChild(bookRemove);             
+        bookCard.appendChild(bookRemove);   
+        
+        
         });
 }
 
@@ -72,14 +99,6 @@ function openModal() {
 
 function closeModal() {
     modal.classList.remove('active');
-}
-
-function toggleRead(book) {
-    if(book.read == 'Read') {
-        book.read = 'Not Read';
-    } else {
-        book.read = 'Read';
-    }
 }
 
 addBookButton.addEventListener('click', function() {
