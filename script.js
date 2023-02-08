@@ -7,21 +7,23 @@ let modal = document.getElementById('modal');
 let submitButton = document.getElementById('submit');
 let exitButton = document.getElementById('exitModal');
 
+class Book {
+    constructor(title, author, pages, read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
 
-function Book(title, author, pages, read) {
-    this.title = title
-    this.author = author
-    this.pages = pages
-    this.read = read
-}
-
-Book.prototype.toggleRead = function() {
-    if(this.read == 'Read') {
-        this.read = 'Not Read';
-    } else {
-        this.read = 'Read';
+    toggleRead() {
+        if(this.read == 'Read') {
+            this.read = 'Not Read';
+        } else {
+            this.read = 'Read';
+        }
     }
 }
+
 
 function newBook() {
     let title = document.getElementById('title').value;
@@ -57,8 +59,8 @@ function addCard() {
         const bookRead = document.createElement('button');
         const bookRemove = document.createElement('button');
     
-        infoList.classList.add('infoList');
         bookCard.classList.add('bookCard');
+        infoList.classList.add('infoList');
         bookTitle.classList.add('bookTitle');
         bookAuthor.classList.add('bookAuthor');
         bookPages.classList.add('bookPages');
